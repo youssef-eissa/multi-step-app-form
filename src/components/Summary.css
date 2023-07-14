@@ -1,0 +1,39 @@
+.recipt{
+    background-color: #F8F9FF;
+}
+.change{
+    color: #9699AA;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+}
+.change:hover{
+    color: #483EFF;
+}
+.adds{
+    color: #9699AA;
+}
+.addsprice{
+    color: #022959;
+}
+.total{
+    color: #9699AA;
+}
+.totalprice{
+    color: #483EFF;
+    font-size: 20px;
+    font-weight: bold;
+}
+@media (max-width:768px) {
+    .addsprice{
+        font-size: 14px;
+    }
+    .totalprice{
+        font-size: 16px;
+    }
+    .total,
+    .change{
+        font-size: 14px;
+    }
+    
+}

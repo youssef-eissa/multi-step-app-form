@@ -1,0 +1,16 @@
+h1{
+    color: #022959;
+font-family: 'Open Sans', sans-serif;
+font-weight: bold;}
+p{
+    color: #9699AA;
+    font-size: 16px;
+}
+.personalInfo input {
+border: 1px solid #D6D9E6;
+border-radius: 10px;
+font-size: 16px;
+}
+.personalInfo label {
+    color: #022959;
+}

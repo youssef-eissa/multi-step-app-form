@@ -1,0 +1,22 @@
+.addon label{
+    border: 1px solid #D6D9E6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.addon label:hover{
+    border: 1px solid #483EFF;
+}
+.addon label:has(input:checked){
+    background-color: #EFF5FF;
+        border: 1px solid #483EFF;
+}
+.addon .price {
+    color:#483EFF ;
+}
+@media (max-width:768px) {
+    .pp p,
+    .pp .price{
+        font-size: 12px;
+    }
+}

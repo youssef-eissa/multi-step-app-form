@@ -1,0 +1,71 @@
+h1{
+    color: #022959;
+}
+.plan .radioInput label{
+    border: 1px solid #D6D9E6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.plan .radioInput label:has(input:checked){
+    background-color: #EFF5FF;
+    border: 1px solid #483EFF;
+}
+.plan .radioInput label:hover{
+    border: 1px solid #483EFF;
+}
+.plan  .title{
+    color: #022959;
+}
+
+.duration{
+    background-color: #F8F9FF;
+border-radius: 5px;
+}
+.check{
+    cursor: pointer;
+}
+.bar{
+    background-color: #022959;
+    border-radius: 10px;
+}
+.ball{
+    background-color: white;
+    border-radius: 50%;
+    width: 12px;
+    left: 20%;
+    transition: 1s;
+}
+.ball.right{
+    left: 80%;
+}
+.free{
+    color: #022959;
+}
+.price{
+    color: #9699AA;
+}
+@media (max-width:768px) {
+    .plann{
+        position: relative;
+    }
+    .free{
+        font-size: 12px;
+    }
+    .switchh{
+        position: absolute;
+        bottom: -90px;
+    }
+    .plan h1{
+        font-size: 24px;
+    }
+    .plan h3{
+        font-size: 16px;
+    }
+    .plan .price{
+        font-size: 12px;
+    }
+    .plan .middd{
+        transform: translateY(10px);
+    }
+}
