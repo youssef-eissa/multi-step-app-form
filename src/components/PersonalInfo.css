@@ -14,3 +14,10 @@ font-size: 16px;
 .personalInfo label {
     color: #022959;
 }
+
+.personalInfo input.red{
+    border: 1px solid red;
+}
+.error{
+    color: red;
+}

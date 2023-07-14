@@ -5,6 +5,7 @@ import Plan from './Plan'
 import AddOn from './AddOn'
 import Summary from './Summary'
 import End from './End'
+import { Alert } from 'bootstrap'
 
 
 
@@ -19,9 +20,15 @@ function formReducer(state, action) {
         switch (action.type) {
             case "nextpage": return { ...state, page: state.page + 1 }
             
-            case "prevpage": return { ...state, page: state.page - 1 }
+            case "prevpage": return { ...state, page: state.page - 1 ,NameAlert: state.NameAlert="",nameError:state.nameError="",mailError:state.mailError="" }
+            
+            case "NameinfoAlert": return { ...state, NameAlert: state.NameAlert = "red", nameError: state.nameError = "Your Name Is Required" }
 
-            case "theName" : return{...state, fullname:state.fullname=action.payload,}
+            case "noNameinfoAlert": return { ...state, NameAlert: state.NameAlert = "", nameError: state.nameError = "" }
+            
+            case "EmailinfoAlert": return { ...state, MailAlert: state.MailAlert = "red", mailError: state.mailError = "Your Email Is Required" }
+            
+            case "PhoneinfoAlert" :return{...state, PhoneAlert:state.PhoneAlert="red",phoneError:state.phoneError="Your Phone Number Is Required"}
 
             case "arcadeRadioSelect": return { ...state, plan: state.plan = "Arcade" , MonthlyFinalPrice:state.MonthlyFinalPrice=9,YearlyFinalPrice:state.YearlyFinalPrice=90 , MonthlytotalPrice:state.MonthlytotalPrice + 9,YearlytotalPrice:state.YearlytotalPrice+90 }
             
@@ -52,7 +59,7 @@ function formReducer(state, action) {
     
     const [state, dispatch] = useReducer(formReducer, {
         page: 0,
-        fullname: "dsa",
+        fullname: "",
         mail: "",
         phone: "",
         plan: "",
@@ -85,13 +92,22 @@ function formReducer(state, action) {
         StorageFinalPriceY: 0,
         ProfileFinalPriceM: 0,
         ProfileFinalPriceY: 0,
-        invisible:"invisible"
+        invisible: "invisible",
+        NameLength: "",
+        EmailLength:"",
+        PhoneLength:"",
+        NameAlert: "",
+        MailAlert: "",
+        PhoneAlert: "",
+        nameError: "",
+        mailError:"",
+        phoneError:"",
     })
-   
-const [firstname,setFirstName]=useState("youssef")
+
+
     function DisplayPage() {
         if (state.page === 0) {
-            return <PersonalInfo state={state } Dispatch={dispatch} theName={firstname} setName={setFirstName}  />
+            return <PersonalInfo state={state } Dispatch={dispatch}  />
         } else if (state.page === 1) {
             return <Plan state={state} dispatch={dispatch} />
         } else if (state.page === 2) {
@@ -101,9 +117,20 @@ const [firstname,setFirstName]=useState("youssef")
         } else {
             return <End/>
         }
-    
     }
-    
+ 
+    function handleNext() {
+        if (state.page===0&& state.NameLength.length === 0) {
+           dispatch({type:"NameinfoAlert"})
+            
+        } else if (state.page === 1 && state.plan === "") {
+           alert("please select a plan")
+        }
+        else {
+            dispatch({type:"nextpage"})
+        }
+        
+    }
     
     return (
         <div   className="container-fluid body ">
@@ -142,7 +169,7 @@ const [firstname,setFirstName]=useState("youssef")
                    <div > <DisplayPage /></div>
                      <div className={`control p-md-3 p-5 col-md-12 d-flex justify-content-between align-items-center p-md-5 control   ${state.page>3?"d-none":""}`}>
                         {state.page===0 || state.page===4?"": <button onClick={()=>dispatch({type:"prevpage"})} className='back col-md-3 col-4'>Go Back</button>}
-                        {state.page===3? <button type='submit' onClick={() => dispatch({ type: "nextpage" })} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3 confirm'>Confirm</button>:state.page===4?"":<button type='submit' onClick={() => dispatch({ type: "nextpage" })} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3'>Next Step</button>}
+                        {state.page===3? <button type='submit' onClick={() => dispatch({ type: "nextpage" })} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3 confirm'>Confirm</button>:state.page===4?"":<button type='submit' onClick={() => handleNext()} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3'>Next Step</button>}
                 </div>
                 </div>
                
