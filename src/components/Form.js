@@ -5,22 +5,25 @@ import Plan from './Plan'
 import AddOn from './AddOn'
 import Summary from './Summary'
 import End from './End'
-import { Alert } from 'bootstrap'
 
 
 
 function Form() {
+    
+
     const [toggle, setToggle] = useState({
         online: false,
         storage: false,
         profile:false
     })
- 
+
 function formReducer(state, action) {
         switch (action.type) {
             case "nextpage": return { ...state, page: state.page + 1 }
             
-            case "prevpage": return { ...state, page: state.page - 1 ,NameAlert: state.NameAlert="",nameError:state.nameError="",mailError:state.mailError="" }
+            case "prevpage": return { ...state, page: state.page - 1, NameAlert: state.NameAlert = "", nameError: state.nameError = "", mailError: state.mailError = "" }
+            
+            case "name" :return{...state,fullname:state.fullname =action.payload}
             
             case "NameinfoAlert": return { ...state, NameAlert: state.NameAlert = "red", nameError: state.nameError = "Your Name Is Required" }
 
@@ -59,7 +62,7 @@ function formReducer(state, action) {
     
     const [state, dispatch] = useReducer(formReducer, {
         page: 0,
-        fullname: "",
+        fullname: "dsa",
         mail: "",
         phone: "",
         plan: "",
@@ -105,29 +108,41 @@ function formReducer(state, action) {
     })
 
 
-    function DisplayPage() {
-        if (state.page === 0) {
-            return <PersonalInfo state={state } Dispatch={dispatch}  />
-        } else if (state.page === 1) {
+    const [form, setForm] = useState({
+        page:0,
+        name: "",
+        email: "",
+        phone:""
+})
+    const DisplayPage = () => {
+         
+
+    if (form.page===0) {
+            return <PersonalInfo state={state } form={form} setForm={setForm}   />
+        } else if (form.page === 1) {
             return <Plan state={state} dispatch={dispatch} />
-        } else if (state.page === 2) {
-            return <AddOn state={state} dispatch={dispatch} toggle={toggle } setToggle={setToggle} />
-        } else if (state.page === 3) {
-            return <Summary state={state} dispatch={dispatch}/>
-        } else {
+        } else if (form.page === 2) {
+            return <AddOn state={state} dispatch={dispatch}  toggle={toggle } setToggle={setToggle} />
+        } else if (form.page === 3) {
+            return <Summary state={state} dispatch={dispatch} />
+        } else  {
             return <End/>
-        }
     }
- 
+        
+    };
+
     function handleNext() {
-        if (state.page===0&& state.NameLength.length === 0) {
+        if (form.page===0 && form.name.length===0) {
            dispatch({type:"NameinfoAlert"})
             
-        } else if (state.page === 1 && state.plan === "") {
+        } else if (form.page === 0 && form.email.length === 0) {
+            dispatch({type:"EmailinfoAlert"})
+        } else if (form.page === 1 && state.plan === "") {
            alert("please select a plan")
         }
         else {
-            dispatch({type:"nextpage"})
+            setForm({ ...form, page: form.page + 1 })
+            dispatch({ type: "noNameinfoAlert" })
         }
         
     }
@@ -137,28 +152,28 @@ function formReducer(state, action) {
             <div  className="row vh-100 p-md-3">
                 <ul className="sidee col-12 col-md-4 p-md-5 p-5 d-md-block d-flex justify-content-center align-items-start  ">
                     <li className='Main-Box  d-flex align-items-center '>
-                        <div className={`number ${state.page===0?"active":""}  d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2 `}>1</div>
+                        <div className={`number ${form.page===0?"active":""}  d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2 `}>1</div>
                         <div className='text d-md-block d-none'>
                             <span className='step'>Step 1</span>
                             <div className='info'>Your Info</div>
                         </div>
                     </li>
                      <li className='Main-Box d-flex align-items-center '>
-                        <div className={`number ${state.page===1?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2 `}>2</div>
+                        <div className={`number ${form.page===1?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2 `}>2</div>
                         <div className='text d-md-block d-none'>
                             <span className='step'>Step 2</span>
                             <div className='info'>Select Plan</div>
                         </div>
                     </li>
                      <li className='Main-Box d-flex align-items-center '>
-                        <div className={`number ${state.page===2?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2`}>3</div>
+                        <div className={`number ${form.page===2?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2`}>3</div>
                         <div className='text d-md-block d-none'>
                             <span className='step'>Step 3</span>
                             <div className='info'>ADD-ONS</div>
                         </div>
                     </li>
                      <li className='Main-Box d-flex align-items-center '>
-                        <div className={`number ${state.page===3 || state.page===4?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2`}>4</div>
+                        <div className={`number ${form.page===3 || form.page===4?"active":""} d-flex align-items-center justify-content-center p-3 me-md-3 mx-md-0 mx-2`}>4</div>
                         <div className='text d-md-block d-none'>
                             <span className='step'>Step 4</span>
                             <div className='info'>SUMMARY</div>
@@ -167,9 +182,9 @@ function formReducer(state, action) {
                 </ul>
                 <div className='col-md-8 formcon col-10 mx-auto p-md-0 p-3  position-relative   '>
                    <div > <DisplayPage /></div>
-                     <div className={`control p-md-3 p-5 col-md-12 d-flex justify-content-between align-items-center p-md-5 control   ${state.page>3?"d-none":""}`}>
-                        {state.page===0 || state.page===4?"": <button onClick={()=>dispatch({type:"prevpage"})} className='back col-md-3 col-4'>Go Back</button>}
-                        {state.page===3? <button type='submit' onClick={() => dispatch({ type: "nextpage" })} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3 confirm'>Confirm</button>:state.page===4?"":<button type='submit' onClick={() => handleNext()} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3'>Next Step</button>}
+                     <div className={`control p-md-3 p-5 col-md-12 d-flex justify-content-between align-items-center p-md-5 control   ${form.page>3?"d-none":""}`}>
+                        {form.page===0 || form.page===4?"": <button onClick={()=>setForm({...form,page:form.page-1})} className='back col-md-3 col-4'>Go Back</button>}
+                        {form.page===3? <button onClick={()=>handleNext()} type='submit'  className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3 confirm'>Confirm</button>:state.page===4?"":<button type='submit' onClick={()=>handleNext()} className='next ms-auto col-md-2 col-4 p-2 text-center py-md-3'>Next Step</button>}
                 </div>
                 </div>
                
