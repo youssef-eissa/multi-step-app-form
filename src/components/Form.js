@@ -62,7 +62,7 @@ function formReducer(state, action) {
     
     const [state, dispatch] = useReducer(formReducer, {
         page: 0,
-        fullname: "dsa",
+        fullname: "",
         mail: "",
         phone: "",
         plan: "",
@@ -118,7 +118,7 @@ function formReducer(state, action) {
          
 
     if (form.page===0) {
-            return <PersonalInfo state={state } form={form} setForm={setForm}   />
+            return <PersonalInfo state={state } dispatch={dispatch} form={form} setForm={setForm}   />
         } else if (form.page === 1) {
             return <Plan state={state} dispatch={dispatch} />
         } else if (form.page === 2) {

@@ -1,7 +1,6 @@
 import './PersonalInfo.css'
-function PersonalInfo({ state, Dispatch,form,setForm}) {
-   
-  
+function PersonalInfo({ state, dispatch,form,setForm}) {
+
 
     return (
         <div className="container-fluid personalInfo position-relative p-md-5">
@@ -11,11 +10,10 @@ function PersonalInfo({ state, Dispatch,form,setForm}) {
                     <p>Please provide your name, email address, and phone number.</p>
                     <form className='form container'>
                         <div className='row'>
-                            <label className='mb-md-2' htmlFor='name'>Name</label>
-                            <input value={form.name} onChange={(e) => {setForm({...form,name:e.target.value}) }} name='fullName' type='text' id='name' className={`p-md-3 mb-md-2 mb-2 p-2 ${form.name.length===0?state.NameAlert:""}`} placeholder='e.g ds King' />
-                           {state.NameLength>0?"": <span className='error'>{form.name.length===0?state.nameError:""}</span>}
+                            <input value={state.fullname} onChange={(e) => dispatch({ type: 'name', payload: e.target.value })} name='fullName' type='text' id='name' className={`p-md-3 mb-md-2 mb-2 p-2 ${form.name.length === 0 ? state.NameAlert : ""}`} placeholder='e.g ds King' />
+                        {state.NameLength>0?"": <span className='error'>{form.name.length===0?state.nameError:""}</span>}
                         </div>
-                         <div className='row'>
+                        <div className='row'>
                             <label className='mb-md-2' htmlFor='mail'>Email Address</label>
                             <input   value={form.email} onChange={(e) => {setForm({...form,email:e.target.value}) }}  name='email' type='text' id='mail' className={`p-md-3 mb-md-2 p-2 mb-2 ${state.MailAlert}`} placeholder='e.g. stephenking@lorem.com' />
                             <span className='error'>{state.mailError }</span>
